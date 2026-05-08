@@ -1,45 +1,49 @@
-import userModel from '../Models/User.js';
-import { BaseController } from './BaseController.js';
+import userService from "../Services/userService.js";
 
-const BaseController = require('./BaseController');
-const userService = require('../services/UserService');
+class UserController {
 
-export class UserController extends BaseController {
-  async getUsers(req, res) {
-    try {
-      const users = await userService.getUsers();
-      this.sendResponse(res, users);
-    } catch (error) {
-      this.sendError(res, error);
+    async getUsers(req, res) {
+
+        try {
+            await userService.getUsers((err, results) => {
+
+                if (err) {
+                    return res.status(500).json({
+                        message: err
+                    });
+                }
+
+                res.json(results);
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: error.message
+            });
+        }
     }
-  }
 
-  async createUser(req, res) {
-    try {
-      const user = await userService.createUser(req.body);
-      this.sendResponse(res, user, 'User created');
-    } catch (error) {
-      this.sendError(res, error);
-    }
-  }
+    async createUser(req, res) {
 
-  async updateUser(req, res) {
-    try {
-      const user = await userService.updateUser(req.params.id, req.body);
-      this.sendResponse(res, user, 'User updated');
-    } catch (error) {
-      this.sendError(res, error);
-    }
-  }
+        try {
+            await userService.addUser(req.body, (err, result) => {
 
-  async deleteUser(req, res) {
-    try {
-      const user = await userService.deleteUser(req.params.id);
-      this.sendResponse(res, user, 'User deleted');
-    } catch (error) {
-      this.sendError(res, error);
+                if (err) {
+                    return res.status(400).json({
+                        message: err
+                    });
+                }
+
+                res.json({
+                    message: "User Created",
+                    result
+                });
+            });
+        } catch (error) {
+            res.status(400).json({
+                message: error.message
+            });
+        }
     }
-  }
 }
 
-module.exports = new UserController();
+export default new UserController();

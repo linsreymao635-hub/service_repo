@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "npx nodemon src/server.js",
+    "start": "node server.js",
+    "dev": "npx nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,5 +18,13 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linsreymao635-hub/service_repo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/linsreymao635-hub/service_repo/issues"
+  },
+  "homepage": "https://github.com/linsreymao635-hub/service_repo#readme"
 }
